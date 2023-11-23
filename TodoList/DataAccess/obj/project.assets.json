@@ -1559,6 +1559,19 @@
             "rid": "win"
           }
         }
+      },
+      "Model/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.Extensions.Identity.Stores": "8.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Model.dll": {}
+        }
       }
     }
   },
@@ -4179,6 +4192,11 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Model/1.0.0": {
+      "type": "project",
+      "path": "../Moedl/Model.csproj",
+      "msbuildProject": "../Moedl/Model.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4187,7 +4205,8 @@
       "Microsoft.EntityFrameworkCore.Design >= 8.0.0",
       "Microsoft.EntityFrameworkCore.Relational >= 8.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.0",
-      "Microsoft.EntityFrameworkCore.Tools >= 8.0.0"
+      "Microsoft.EntityFrameworkCore.Tools >= 8.0.0",
+      "Model >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -4216,7 +4235,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\Moedl\\Model.csproj": {
+              "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\Moedl\\Model.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

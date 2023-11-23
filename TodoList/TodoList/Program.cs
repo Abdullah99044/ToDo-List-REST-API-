@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Model.Models;
 using TodoList.Data;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Moedl\Model.csproj" />
+  </ItemGroup>
+
 </Project>
