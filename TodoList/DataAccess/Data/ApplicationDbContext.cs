@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Model.Models;
 
 namespace TodoList.Data
 {
@@ -17,5 +18,6 @@ namespace TodoList.Data
 
             optionsBuilder.UseSqlServer("Server=LAPTOP-EL0218PF\\SQLEXPRESS;Database=ToDoApp;Trusted_Connection=True;TrustServerCertificate=true");
         }
-    }
+
+     }
 }
