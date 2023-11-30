@@ -1,7 +1,9 @@
 import {   } from 'react'
 import './App.css'
-import { Routes , Route , Link} from "react-router-dom";
+import { BrowserRouter as Router    , Route , Link} from "react-router-dom";
 import Login from './Pages/Login';
+import Register from './Pages/Register';
+ 
  
 function App() {
  
@@ -25,6 +27,10 @@ function App() {
                 <Link className="nav-link active text-light" aria-current="page" to='/login'  >  Login </Link> 
               </li>
 
+              <li className="nav-item">
+                <Link className="nav-link active text-light" aria-current="page" to='/Register'  >  Register </Link> 
+              </li>
+
             </ul>
 
           </div>
@@ -32,11 +38,22 @@ function App() {
       </div>
 
     </nav>
-    <Routes>
 
+
+    <Router>
+   
+     
       <Route path='/login' element={ <Login />} />  
+      <Route path='/Register' element={ <Register />} />
+       
+  
+    
 
-    </Routes>
+    </Router>
+ 
+
+     
+ 
 
       
     </>
