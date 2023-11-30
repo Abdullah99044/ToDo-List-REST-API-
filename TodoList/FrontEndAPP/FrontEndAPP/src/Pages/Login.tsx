@@ -1,5 +1,7 @@
 
 import {  useState  } from 'react'
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 function Login() {
@@ -26,38 +28,59 @@ function Login() {
 
         e.preventDefault();
         
-        fetch( 'https://localhost:7237/login' , 
 
-        {
+        const url = 'https://localhost:7237/login?useCookies=true';
+ 
+ 
 
-        method : 'POST' ,
-        headers : {   'Content-Type' : 'application/json' } ,
-        body : JSON.stringify({
-
-            email : email ,
-            password : password
-
-        })}).then(Res => {
-
-
-            if(Res.status === 200){
-
-                console.log("Good")
+        fetch('https://localhost:7237/login?useCookies=true&useSessionCookies=true' , 
+        { 
+            credentials: 'include' ,
+            
+            method : 'POST' , 
+    
+            headers : { 
+                 'Content-Type' : 'application/json'  
+              
+        
+            } ,
+    
+           
+    
+            body : JSON.stringify({
+    
+                
+                email : "string1@gmail.com",
+                password: "Asder77181!",
+                twoFactorCode: "string",
+                twoFactorRecoveryCode: "string"
+             
+    
+            })
+    
+            }
+        )
+        .then(response => { 
+            
+            if(response.status == 200){ 
+                console.log("ok") 
+            }else{
+                console.log("bad") 
             }
 
-            else{
 
-                console.log("Bad")
-            }
-
-        }).catch(error => {
-            console.error('An error occurred while fetching the data:', error);
-        });
+        
+        
+        })
+        .catch(error => console.error(error));
     }
 
 
     return <>
-    
+
+
+        <ToastContainer />       
+
         <div className="container   mt-5">
         <div className="row justify-content-center  mt-5">
             <div className="col-lg-4 col-md-6 col-sm-8  mt-5 rounded p-3   "   >
