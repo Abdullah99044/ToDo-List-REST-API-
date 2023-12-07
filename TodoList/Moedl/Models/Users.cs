@@ -18,5 +18,8 @@ namespace Model.Models
         [MaxLength(100)]
 
         public string LastName { get; set; }  
+
+
+        public ICollection<Lists> Lists { get; set; }
     }
 }

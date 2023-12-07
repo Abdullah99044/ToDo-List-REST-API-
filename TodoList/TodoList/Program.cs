@@ -22,6 +22,10 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddAuthentication()
+            .AddCookie(options => {
+                options.Cookie.Name = "MyAuth.Cookie";
+});
 
 //Add CORS policy
 
@@ -29,7 +33,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("http://localhost:5175")
+        builder.WithOrigins("http://localhost:5173")
                        .AllowAnyHeader()
                        .AllowAnyMethod()
                        .AllowCredentials();

@@ -6,15 +6,15 @@ function Home() {
      
 
 
-    return <>
+    return ( <>
 
 
         
-         <h1> Ho,e</h1>
+         <h1>Home</h1>
 
  
     
-    </>
+    </>)
 
 
 }
