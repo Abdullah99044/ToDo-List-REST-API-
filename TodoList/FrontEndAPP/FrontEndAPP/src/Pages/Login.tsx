@@ -1,10 +1,20 @@
 
-import {  useState  } from 'react'
-import { toast, ToastContainer } from "react-toastify";
+import {  useState , useContext } from 'react';
+import {  AuthContext  } from './Auth/AuthenticationProvider.tsx'
+import Cookies from 'js-cookie' ;
+import {  ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate   } from "react-router-dom";
 
 
 function Login() {
+
+
+    const  logIn  = useContext(AuthContext);
+
+   
+    const navigate = useNavigate();
+   
 
     const [email , setEmail ] = useState("");
 
@@ -23,6 +33,8 @@ function Login() {
         setPassword(event.target.value)
 
     };
+
+    
 
     const HandleSubmit = (e: React.FormEvent) => {
 
@@ -50,8 +62,8 @@ function Login() {
             body : JSON.stringify({
     
                 
-                email : "string1@gmail.com",
-                password: "Asder77181!",
+                email :  email ,
+                password:  password,
                 twoFactorCode: "string",
                 twoFactorRecoveryCode: "string"
              
@@ -60,19 +72,23 @@ function Login() {
     
             }
         )
-        .then(response => { 
-            
-            if(response.status == 200){ 
-                console.log("ok") 
+        .then(response =>   {
+
+
+            if(response.status === 200){ 
+
+                logIn?.logIn();
+
+                navigate('/Home');
+
             }else{
-                console.log("bad") 
+
+                
+                toast.error("Invalid Login Details : Check your email or password ")
+
             }
 
-
-        
-        
-        })
-        .catch(error => console.error(error));
+        }).catch(error => console.error(error));
     }
 
 
@@ -91,18 +107,17 @@ function Login() {
 
                                 <div>
                                     <label className="form-label mt-2  text-light " >Email : </label>
-                                    <input  className="form-control"  type="text" name="email" value={email} placeholder='Email' onChange={HandleInputChangeEmail}/>
+                                    <input  className="form-control"  type="text" name="email" value={email} placeholder='Email' onChange={HandleInputChangeEmail} required />
                                 </div>
 
                                 <div>
                                     <label  className="form-label  mt-2  text-light " >Password : </label>
-                                    <input className="form-control " type="text" name="Password" value={password} placeholder='Password' onChange={HandleInputChangePassword}/>
+                                    <input className="form-control " type="text" name="Password" value={password} placeholder='Password' onChange={HandleInputChangePassword} required />
                                 </div>
 
                                 <div className="text-center ">
                                     <button   className="btn btn-light mt-4 " type="submit"> submit </button>
                                 </div>
-
                             </div>
                         </form>
                     </div>

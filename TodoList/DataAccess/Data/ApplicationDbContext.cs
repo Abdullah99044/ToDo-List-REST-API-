@@ -19,5 +19,19 @@ namespace TodoList.Data
             optionsBuilder.UseSqlServer("Server=LAPTOP-EL0218PF\\SQLEXPRESS;Database=ToDoApp;Trusted_Connection=True;TrustServerCertificate=true");
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Lists>()
+                .HasOne(p => p.Users)
+                .WithMany(p => p.Lists)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
+
+        public DbSet<Lists> Lists { get; set; }
+
      }
 }

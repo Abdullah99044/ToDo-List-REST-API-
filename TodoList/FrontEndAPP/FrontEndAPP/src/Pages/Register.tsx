@@ -1,8 +1,10 @@
 
 
-import React, { useState } from "react";
+import React, { useState , useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate   } from "react-router-dom";
+import {  AuthContext  } from './Auth/AuthenticationProvider.tsx'
 
 
 
@@ -13,8 +15,11 @@ function Register () {
     const [Email , SetEmail] = useState("")
 
     const [Password , SetPassword] = useState("")
+    
+    const  logIn  = useContext(AuthContext);
 
  
+    const navigate = useNavigate();
 
     
     const HandleEmail = (event : React.ChangeEvent<HTMLInputElement>) =>{
@@ -48,21 +53,31 @@ function Register () {
 
         })
 
-        }).then( Res =>  Res.json()
+        }).then( Res => { 
 
-        ).then(data => {
-            
-            if(data.status != 200){
+
+            if(Res.status === 200){
                 
- 
-                let myUnknown: unknown = Object.values(data.errors)[0];
-                let myString: string = myUnknown as string;
-               
-               
-                toast.error(myString[0]);
- 
+                
+                logIn?.logIn();
+
+                return navigate('/Home');
             }
-          
+
+            else {
+
+                return Res.json()
+            }
+
+
+        }).then(data => {
+            
+            let myUnknown: unknown = Object.values(data.errors)[0];
+            let myString: string = myUnknown as string;
+            
+            
+            toast.error(myString[0]);
+
         });
     }
 
@@ -79,12 +94,12 @@ function Register () {
 
                             <div>
                                 <label className="form-label mt-2  text-light " >Email : </label>
-                                <input  className="form-control"  type="text" name="email" value={Email} placeholder='Email' onChange={HandleEmail}/>
+                                <input  className="form-control"  type="text" name="email" value={Email} placeholder='Email' onChange={HandleEmail} required />
                             </div>
 
                             <div>
                                 <label  className="form-label  mt-2  text-light " >Password : </label>
-                                <input className="form-control " type="text" name="Password" value={Password} placeholder='Password' onChange={HandlePassowrd}/>
+                                <input className="form-control " type="text" name="Password" value={Password} placeholder='Password' onChange={HandlePassowrd} required />
                             </div>
 
                             <div className="text-center ">
