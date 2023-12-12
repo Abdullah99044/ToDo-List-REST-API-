@@ -140,3 +140,5 @@ C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\D
 C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Model.dll
 C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Model.pdb
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

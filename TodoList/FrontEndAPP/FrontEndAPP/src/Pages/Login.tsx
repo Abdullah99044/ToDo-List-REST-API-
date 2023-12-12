@@ -1,7 +1,6 @@
 
 import {  useState , useContext } from 'react';
 import {  AuthContext  } from './Auth/AuthenticationProvider.tsx'
-import Cookies from 'js-cookie' ;
 import {  ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate   } from "react-router-dom";
@@ -41,8 +40,7 @@ function Login() {
         e.preventDefault();
         
 
-        const url = 'https://localhost:7237/login?useCookies=true';
- 
+  
  
 
         fetch('https://localhost:7237/login?useCookies=true&useSessionCookies=true' , 
@@ -56,7 +54,7 @@ function Login() {
               
         
             } ,
-    
+     
            
     
             body : JSON.stringify({
@@ -78,7 +76,7 @@ function Login() {
             if(response.status === 200){ 
 
                 logIn?.logIn();
-
+                logIn?.setUserEmail(email);
                 navigate('/Home');
 
             }else{
