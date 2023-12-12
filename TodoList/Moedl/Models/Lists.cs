@@ -29,6 +29,9 @@ namespace Model.Models
 
         public Users Users { get; set; }
 
+        public ICollection<TodoLists> TodoLists { get; set; }
+
+
         [Required]
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;

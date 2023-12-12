@@ -4,7 +4,7 @@ using Model.Models;
 
 namespace TodoList.Data
 {
-    public class ApplicationDbContext : IdentityDbContext 
+    public class ApplicationDbContext : IdentityDbContext<Users>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
@@ -28,10 +28,22 @@ namespace TodoList.Data
                 .WithMany(p => p.Lists)
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TodoLists>()
+               .HasOne(p => p.Lists)
+               .WithMany(p => p.TodoLists)
+               .HasForeignKey(p => p.ListId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
 
 
         public DbSet<Lists> Lists { get; set; }
 
-     }
+        public DbSet<TodoLists> TodoLists { get; set; }
+
+
+
+
+
+    }
 }

@@ -60,7 +60,7 @@ function Register () {
                 
                 
                 logIn?.logIn();
-
+                logIn?.setUserEmail(Email);
                 return navigate('/Home');
             }
 

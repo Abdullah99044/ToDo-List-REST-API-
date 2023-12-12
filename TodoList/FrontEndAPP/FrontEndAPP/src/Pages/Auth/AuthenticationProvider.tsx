@@ -9,8 +9,9 @@ interface Authentication {
     SetJwtKey: (Key : string  ) => void;
     ReturnJwt: () => string;
     logout: () => void;
-
-}
+    setUserEmail : (email : string) => void;
+    getUserEmail : () => any;
+} 
 
 //Authentication context
 
@@ -29,6 +30,17 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const [JWT , setJWT] = useState("");
 
+ 
+    const setUserEmail = (email : string) => {
+
+      sessionStorage.setItem('userEmail', email);
+     
+    }
+
+    const getUserEmail = () => {
+
+      return sessionStorage.getItem('userEmail');
+    }
 
     const SetJwtKey = (Key : string  ) => {
 
@@ -44,6 +56,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     const logIn = () => {
 
       sessionStorage.setItem('Islogged', "true" );
+      
+
       setAuthenticated(true);
     };
   
@@ -51,13 +65,15 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       // Perform logout logic
 
       sessionStorage.removeItem('Islogged');
+      sessionStorage.removeItem('userEmail');
+
       setAuthenticated(false);
          
       
     };
   
     return (
-      <AuthContext.Provider value={{ authenticated   , logIn , SetJwtKey , ReturnJwt , logout }}>
+      <AuthContext.Provider value={{ authenticated   , logIn , SetJwtKey , ReturnJwt , logout , setUserEmail , getUserEmail  }}>
         {children}
       </AuthContext.Provider>
     );

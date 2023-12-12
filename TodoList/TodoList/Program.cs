@@ -1,12 +1,22 @@
 using Microsoft.AspNetCore.Identity;
 using Model.Models;
 using TodoList.Data;
+using TodoList.Services;
+using TodoList.Services.ToDoListsServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
+//Add custom services
+
+builder.Services.AddScoped< IListsServices , ListServices>();
+builder.Services.AddScoped< ITodoListServices, ToDoListServices>();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -20,12 +30,9 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentityApiEndpoints<Users>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddAuthentication()
-            .AddCookie(options => {
-                options.Cookie.Name = "MyAuth.Cookie";
-});
+ 
 
 //Add CORS policy
 
@@ -47,6 +54,15 @@ builder.Services.AddCors(options =>
     });
 });
 
+
+//Add Auto mapper
+
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -58,7 +74,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors();
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<Users>();
 
 app.UseHttpsRedirection();
 
