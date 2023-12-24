@@ -19,10 +19,13 @@ namespace Model.Models.DTO.ToDoListsDTO
         public string Name { get; set; }
 
 
-        [Required]
+        public int tottalTodoLists { get; set; }
 
-        public string Priority { get; set; }
 
-       
+        public int finishedTodoLists { get; set; }
+
+
+        public string color { get; set; }
+
     }
 }

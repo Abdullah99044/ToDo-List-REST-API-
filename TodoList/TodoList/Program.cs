@@ -12,6 +12,7 @@ using TodoList.Data;
 using TodoList.MiddleWare;
 using TodoList.Services;
 using TodoList.Services.ToDoListsServices;
+using TodoList.Services.TodoTasksService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped< IListsServices , ListServices>();
 builder.Services.AddScoped< ITodoListServices, ToDoListServices>();
-
+builder.Services.AddScoped< ITodoTasksService , TodoTasksService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

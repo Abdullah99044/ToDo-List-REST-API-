@@ -50,7 +50,7 @@ namespace Test.Controllers
             var data = new CreateToDoListDTO()
             {
                 Name = "name",
-                Priority = "imprtant" 
+                color = "red"
             };
 
             var FakeList = A.Fake<Lists>();
@@ -90,7 +90,7 @@ namespace Test.Controllers
 
             var FakeList = A.Fake<Lists>();
 
-            var FakeListTodoList = A.Fake<TodoListsDTO>();
+            var FakeListTodoList = A.Fake<TodoList1>();
 
             var FakeToDoLists = A.Fake<List<TodoListDTO>>();
 
@@ -105,9 +105,8 @@ namespace Test.Controllers
                     {
 
                         Name = "name",
-                        Priority = "Imortant",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now,
+                        color = "red"
+                        
 
                     }
                 );
@@ -115,7 +114,7 @@ namespace Test.Controllers
 
             A.CallTo(() => _ListServices.GetListById(Id)).Returns(FakeList);
 
-            A.CallTo(() =>  _ListServices.GetAllTodoLists(Id , filtriring)).Returns(FakeToDoListDTO);
+            A.CallTo(() =>  _ListServices.GetAllTodoLists(Id )).Returns(FakeToDoListDTO);
 
            
 
@@ -123,7 +122,7 @@ namespace Test.Controllers
 
             //Act
 
-            var result = await controller.GetAllToDoLists(Id , filtriring);
+            var result = await controller.GetAllToDoLists(Id  );
 
             //Assert
 
@@ -149,7 +148,7 @@ namespace Test.Controllers
 
             var TodoListDTO = A.Fake<UpdateToDoListDTO>();
 
-            var TodoList = A.Fake<TodoListsDTO>();
+            var TodoList = A.Fake<TodoList1>();
 
 
 
@@ -184,7 +183,7 @@ namespace Test.Controllers
             //Arrange
 
  
-            var TodoList = A.Fake<TodoListsDTO>();
+            var TodoList = A.Fake<TodoList1>();
 
 
 

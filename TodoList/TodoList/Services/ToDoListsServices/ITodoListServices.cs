@@ -14,13 +14,13 @@ namespace TodoList.Services.ToDoListsServices
 
         public Task<Lists> GetListById(int Id);
 
-        public Task<IEnumerable<TodoListDTO>> GetAllTodoLists(int Id , string? filtering);
+        public Task<IEnumerable<TodoListDTO>> GetAllTodoLists(int Id );
 
-        public Task<TodoListsDTO> GetTodoListById(int Id);
+        public Task<TodoList1> GetTodoListById(int Id);
 
-        public Task<bool> UpdateTodoList(TodoListsDTO Data);
+        public Task<bool> UpdateTodoList(TodoList1 Data);
 
-        public Task<bool> DeleteTodoList(TodoListsDTO Data);
+        public Task<bool> DeleteTodoList(TodoList1 Data);
 
 
     }

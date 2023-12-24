@@ -1,17 +1,23 @@
 ﻿using AutoMapper;
 using Azure.Core;
+using DataAccess.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model.Models;
 using Model.Models.DTO.ToDoListsDTO;
+using Model.Models.DTO.TodoTasksDTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using TodoList.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TodoList.Services.ToDoListsServices
 {
+
+
+    //Cache the rquestd list data nad todolist data
     public class ToDoListServices : ITodoListServices
     {
 
@@ -31,7 +37,7 @@ namespace TodoList.Services.ToDoListsServices
         }
 
 
-        public async Task<IEnumerable<TodoListDTO>> GetAllTodoLists(int Id, string? filetrting)
+        public async Task<IEnumerable<TodoListDTO>> GetAllTodoLists(int Id )
         {
             //How does the caching works?
 
@@ -53,44 +59,45 @@ namespace TodoList.Services.ToDoListsServices
             if (_memoryCache.TryGetValue(cacheKey, out IEnumerable<TodoListDTO> cache))
             {
 
-
-                //Filter the data if filtring is not null
-
-
-                if (!string.IsNullOrEmpty(filetrting))
-                {
-                    return cache.Where(u => u.Priority == filetrting);
-
-                }
-                else
-                {
-                    return cache;
-                }
+  
+                //return cache;
+                
                 
             }
 
-            var queryAll = _db.TodoLists.AsNoTracking().Where(u => u.ListId == Id);
+            var queryAll =    _db.TodoList.AsNoTracking().Where(u => u.ListId == Id).Include(tl => tl.TodoTasks);
+ 
+            var TodoList = await queryAll.ToListAsync();
 
-            //Filter the data if filtring is not null
-
-            if (!string.IsNullOrEmpty(filetrting))
+            IEnumerable<TodoListDTO> userTodoLits = TodoList.Select(TodoList => new TodoListDTO()
             {
-                queryAll.Where(u => u.Priority == filetrting);
 
-            }
+                Id = TodoList.Id ,
+                Name = TodoList.Name ,
+                tottalTodoLists = TodoList.tottalTodoLists ,
+                finishedTodoLists = TodoList.finishedTodoLists ,
+                color = TodoList.color ,
+                TodoTasks = TodoList.TodoTasks.Select(todoTask => new TodoTasks 
+                {
+
+                    Id = todoTask.Id,
+                    Name = todoTask.Name,
+                    status = todoTask.status  ,
+                    Updated = todoTask.Updated  ,
+                    Created = todoTask.Created ,
+                    todoListId= 0 
+
+                }).ToList()
+            });
+
+            var cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(2));
+            _memoryCache.Set(cacheKey, userTodoLits, cacheOptions);
 
 
-            var userTodoLists = await queryAll.Select(TodoList => _mapper.Map<TodoListDTO>(TodoList)).ToListAsync();
+           
 
-            //Cache the data
+            return userTodoLits;
 
-            var cacheOptions = new MemoryCacheEntryOptions()
-                                    .SetSlidingExpiration(TimeSpan.FromMinutes(2));
-
-            _memoryCache.Set(cacheKey, userTodoLists, cacheOptions);
-
-            return userTodoLists;
-          
 
         }
 
@@ -124,34 +131,64 @@ namespace TodoList.Services.ToDoListsServices
         public async Task<bool> InsertTodoList(int Id, CreateToDoListDTO Data)
         {
 
-            var ToDoListData =  new TodoListsDTO();
+            var ToDoListData =  new TodoList1();
 
             ToDoListData.Name = Data.Name;
-            ToDoListData.Priority = Data.Priority;
+            ToDoListData.color = Data.color;
             ToDoListData.ListId = Id;
+            ToDoListData.finishedTodoLists = 0;
+            ToDoListData.tottalTodoLists = 0;
             ToDoListData.CreatedAt = DateTime.Now;
             ToDoListData.UpdatedAt = DateTime.Now;
 
-            await _db.TodoLists.AddAsync(ToDoListData);
+            await _db.TodoList.AddAsync(ToDoListData);
 
             return await Save(ToDoListData.ListId);
         }
 
       
-        public async Task<TodoListsDTO> GetTodoListById(int Id)
+        public async Task<TodoList1> GetTodoListById(int Id)
         {
-            return await _db.TodoLists.FindAsync(Id);
+
+            //Cache the todolist data 
+
+
+            var cacheKey = $"TodoListID_{Id}";
+
+            if (_memoryCache.TryGetValue(cacheKey, out TodoList1 cachedTodoList))
+            {
+                return cachedTodoList;
+            }
+
+            var todoList = await _db.TodoList.FindAsync(Id);
+
+            if (todoList == null)
+            {
+                return null;
+            }
+
+            var cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(2));
+            _memoryCache.Set(cacheKey, todoList, cacheOptions);
+
+            return todoList; 
+           
         }
 
-        public async Task<bool> UpdateTodoList(TodoListsDTO Data)
+        public async Task<bool> UpdateTodoList(TodoList1 Data)
         {
             _db.Update(Data);
             
             return await Save(Data.ListId);
         }
 
-        public async Task<bool> DeleteTodoList(TodoListsDTO Data)
+        public async Task<bool> DeleteTodoList(TodoList1 Data)
         {
+
+
+            //The app stores the the todolist data in sevral function , when it's removed it will also be removed from the cache data
+            _memoryCache.Remove($"TodoListID_{Data.Id}");
+
+
             _db.Remove(Data);
             return await Save(Data.ListId);
         }

@@ -24,17 +24,25 @@ namespace TodoList.Data
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<TodoListsDTO>()
+            builder.Entity<TodoList1>()
                .HasOne(p => p.Lists)
                .WithMany(p => p.TodoLists)
                .HasForeignKey(p => p.ListId)
                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TodoTasks>()
+              .HasOne(p => p.TodoList1)
+              .WithMany(p => p.TodoTasks)
+              .HasForeignKey(p => p.todoListId)
+              .OnDelete(DeleteBehavior.Cascade);
         }
 
 
         public DbSet<Lists> Lists { get; set; }
 
-        public DbSet<TodoListsDTO> TodoLists { get; set; }
+        public DbSet<TodoList1> TodoList { get; set; }
+
+        public DbSet<TodoTasks> TodoTasks { get; set; }
 
 
 

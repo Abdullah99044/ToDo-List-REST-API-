@@ -9,25 +9,23 @@ namespace Model.Models.DTO.ToDoListsDTO
 {
     public class TodoListDTO
     {
- 
+
+        [Required]
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
 
+        public int tottalTodoLists { get; set; }
 
-        [Required]
 
-        public string Priority { get; set; }
+        public int finishedTodoLists { get; set; }
 
-         
 
-        [Required]
+        public string color { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        [Required]
-
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        
+        public ICollection<TodoTasks> TodoTasks { get; set; }
     }
 }
