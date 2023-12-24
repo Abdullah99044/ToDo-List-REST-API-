@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Model.Models
 {
-    public class TodoLists
+    public class TodoListsDTO
     {
 
         [Key]

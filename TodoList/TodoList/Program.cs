@@ -1,6 +1,15 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Model.Models;
+using Serilog;
+using System;
+using System.Threading.RateLimiting;
 using TodoList.Data;
+using TodoList.MiddleWare;
 using TodoList.Services;
 using TodoList.Services.ToDoListsServices;
 
@@ -24,7 +33,12 @@ builder.Services.AddSwaggerGen();
 
 //Add database
 
-builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+
 
 //Add authorization and authentication
 
@@ -32,8 +46,25 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddIdentityApiEndpoints<Users>().AddEntityFrameworkStores<ApplicationDbContext>();
 
- 
+//Add versioning
 
+builder.Services.AddApiVersioning(options =>
+{
+
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1,0);
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+
+        new HeaderApiVersionReader("x-version")
+    );
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+ 
 //Add CORS policy
 
 builder.Services.AddCors(options =>
@@ -62,6 +93,58 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 
 
+//Add security headers 
+
+builder.Services.AddTransient<securityHeadersMiddleWare>();
+
+
+//Add Inmemeory cache
+
+builder.Services.AddMemoryCache();
+
+
+//Add rate limiting based on Ip address
+
+builder.Services.AddRateLimiter(options => { 
+ 
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+     
+    options.AddPolicy("FixedWindow", HttpContext =>
+
+        RateLimitPartition.GetFixedWindowLimiter(
+            
+            partitionKey : HttpContext.Connection.RemoteIpAddress?.ToString(),
+            factory : _ => new FixedWindowRateLimiterOptions
+            {
+
+                PermitLimit = 10,
+                Window = TimeSpan.FromSeconds(10)
+
+            }  
+        )
+    );
+});
+
+
+//Add logger 
+
+Log.Logger = new LoggerConfiguration().MinimumLevel
+                                        .Error()
+                                        .WriteTo
+                                        .Console()
+                                        .WriteTo.File("logs/ApiLog-.txt", rollingInterval: RollingInterval.Day)
+                                        .CreateLogger();
+
+builder.Host.UseSerilog();
+
+
+
+//Add Global error handler
+
+builder.Services.AddTransient<GlobalExceptionHandlingMiddlewarecs>();
+
+
+
 
 var app = builder.Build();
 
@@ -72,13 +155,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseMiddleware<GlobalExceptionHandlingMiddlewarecs>();
+
+app.UseHttpsRedirection();
+
 app.UseCors();
 
 app.MapIdentityApi<Users>();
 
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
+
+app.UseRateLimiter();
+
+app.UseSerilogRequestLogging();
+
+app.UseMiddleware<securityHeadersMiddleWare>();
 
 app.MapControllers();
 

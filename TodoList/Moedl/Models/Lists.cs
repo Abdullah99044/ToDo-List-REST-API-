@@ -29,7 +29,7 @@ namespace Model.Models
 
         public Users Users { get; set; }
 
-        public ICollection<TodoLists> TodoLists { get; set; }
+        public ICollection<TodoListsDTO> TodoLists { get; set; }
 
 
         [Required]

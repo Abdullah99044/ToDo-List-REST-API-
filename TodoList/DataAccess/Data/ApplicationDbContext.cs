@@ -13,12 +13,7 @@ namespace TodoList.Data
             
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-
-            optionsBuilder.UseSqlServer("Server=LAPTOP-EL0218PF\\SQLEXPRESS;Database=ToDoApp;Trusted_Connection=True;TrustServerCertificate=true");
-        }
-
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -29,7 +24,7 @@ namespace TodoList.Data
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<TodoLists>()
+            builder.Entity<TodoListsDTO>()
                .HasOne(p => p.Lists)
                .WithMany(p => p.TodoLists)
                .HasForeignKey(p => p.ListId)
@@ -39,7 +34,7 @@ namespace TodoList.Data
 
         public DbSet<Lists> Lists { get; set; }
 
-        public DbSet<TodoLists> TodoLists { get; set; }
+        public DbSet<TodoListsDTO> TodoLists { get; set; }
 
 
 

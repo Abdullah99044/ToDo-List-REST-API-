@@ -142,3 +142,16 @@ C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\D
 C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Model.pdb
 C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Asp.Versioning.Abstractions.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Asp.Versioning.Http.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Asp.Versioning.Mvc.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Asp.Versioning.Mvc.ApiExplorer.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Serilog.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Serilog.AspNetCore.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Serilog.Extensions.Logging.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Serilog.Formatting.Compact.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Serilog.Settings.Configuration.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Serilog.Sinks.Console.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\TodoList\bin\Debug\net8.0\Serilog.Sinks.File.dll
