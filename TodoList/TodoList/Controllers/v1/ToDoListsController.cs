@@ -41,23 +41,23 @@ namespace TodoList.Controllers.v1
         }
 
 
-        [HttpGet("{Id}")]
+        [HttpGet("{ListId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(406)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> GetAllToDoLists(int Id , [FromQuery] string? filtering )
+        public async Task<IActionResult> GetAllToDoLists(int ListId)
         {
 
 
-            if (Id == 0)
+            if (ListId == 0)
             {
                 _Logger.LogError("In TodoListscontroller in GetAllToDoLists : Error 400 The List Id is invalid");
                 return BadRequest("The List Id is invalid");
             }
 
-            var List = await _ListServices.GetListById(Id);
+            var List = await _ListServices.GetListById(ListId);
 
             if (List == null)
             {
@@ -65,7 +65,7 @@ namespace TodoList.Controllers.v1
                 return NotFound("This List doesn't exist");
             }
 
-            var toDoLists = await _ListServices.GetAllTodoLists(Id , filtering);
+            var toDoLists = await _ListServices.GetAllTodoLists(ListId);
 
             return Ok(toDoLists);
 
@@ -74,7 +74,7 @@ namespace TodoList.Controllers.v1
 
         //Create a list
 
-        [HttpPost("{Id}")]
+        [HttpPost("{ListId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -82,11 +82,11 @@ namespace TodoList.Controllers.v1
         [ProducesResponseType(500)]
 
 
-        public async Task<IActionResult> CreateList(int Id, [FromBody] CreateToDoListDTO Data)
+        public async Task<IActionResult> CreateList(int ListId, [FromBody] CreateToDoListDTO Data)
         {
 
             
-            if (Id == 0)
+            if (ListId == 0)
             {
 
                 _Logger.LogError("In TodoListscontroller in CreateList : Error 400 The List Id is invalid");
@@ -102,17 +102,17 @@ namespace TodoList.Controllers.v1
             // Encode the input to prevent XSS
 
             Data.Name = WebUtility.HtmlEncode(Data.Name);
-            Data.Priority = WebUtility.HtmlEncode(Data.Priority);
+           // Data.color = WebUtility.HtmlEncode(Data.color);
 
 
-            var List = await _ListServices.GetListById(Id);
+            var List = await _ListServices.GetListById(ListId);
 
             if (List == null)
             {
                 return NotFound();
             }
 
-            await _ListServices.InsertTodoList(Id, Data);
+            await _ListServices.InsertTodoList(ListId , Data);
 
 
             return Ok("Good");
@@ -154,11 +154,14 @@ namespace TodoList.Controllers.v1
             // Encode the input to prevent XSS
 
             Data.Name = WebUtility.HtmlEncode(Data.Name);
-            Data.Priority = WebUtility.HtmlEncode(Data.Priority);
+            //Data.color = WebUtility.HtmlEncode(Data.color);
 
 
             GetTodoList.Name = Data.Name;
-            GetTodoList.Priority = Data.Priority;
+            GetTodoList.color = Data.color;
+            GetTodoList.tottalTodoLists = Data.tottalTodoLists;
+            GetTodoList.finishedTodoLists = Data.finishedTodoLists;
+            
             
 
             await _ListServices.UpdateTodoList(GetTodoList);

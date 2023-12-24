@@ -190,7 +190,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Lists");
                 });
 
-            modelBuilder.Entity("Model.Models.TodoLists", b =>
+            modelBuilder.Entity("Model.Models.TodoList1", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -209,18 +209,57 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Priority")
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("finishedTodoLists")
+                        .HasColumnType("int");
+
+                    b.Property<int>("tottalTodoLists")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ListId");
 
-                    b.ToTable("TodoLists");
+                    b.ToTable("TodoList");
+                });
+
+            modelBuilder.Entity("Model.Models.TodoTasks", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("todoListId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("todoListId");
+
+                    b.ToTable("TodoTasks");
                 });
 
             modelBuilder.Entity("Model.Models.Users", b =>
@@ -350,7 +389,7 @@ namespace DataAccess.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Model.Models.TodoLists", b =>
+            modelBuilder.Entity("Model.Models.TodoList1", b =>
                 {
                     b.HasOne("Model.Models.Lists", "Lists")
                         .WithMany("TodoLists")
@@ -361,9 +400,25 @@ namespace DataAccess.Migrations
                     b.Navigation("Lists");
                 });
 
+            modelBuilder.Entity("Model.Models.TodoTasks", b =>
+                {
+                    b.HasOne("Model.Models.TodoList1", "TodoList1")
+                        .WithMany("TodoTasks")
+                        .HasForeignKey("todoListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TodoList1");
+                });
+
             modelBuilder.Entity("Model.Models.Lists", b =>
                 {
                     b.Navigation("TodoLists");
+                });
+
+            modelBuilder.Entity("Model.Models.TodoList1", b =>
+                {
+                    b.Navigation("TodoTasks");
                 });
 
             modelBuilder.Entity("Model.Models.Users", b =>

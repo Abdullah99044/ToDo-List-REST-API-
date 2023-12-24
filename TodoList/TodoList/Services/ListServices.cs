@@ -48,7 +48,7 @@ namespace TodoList.Services
             List.UserId = Id;
 
             await _db.Lists.AddAsync(List);
-            await _db.SaveChangesAsync();
+            await Save(List.UserId);
 
         }
 
@@ -150,7 +150,7 @@ namespace TodoList.Services
      
 
         //Save changes after every action in the database
-        public async Task<bool> Save( string email )
+        public async Task<bool> Save( string userID )
         {
 
             var saved = await _db.SaveChangesAsync();
@@ -159,7 +159,7 @@ namespace TodoList.Services
             {
 
                 //Remove the cached data when it's updated
-                _memoryCache.Remove($"Key_{email}");
+                _memoryCache.Remove($"Key_{userID}");
                 return true;
             }
 
@@ -181,7 +181,7 @@ namespace TodoList.Services
 
         public async Task DeleteList(Lists entity)
         {
-            _db.Set<Lists>().Remove(entity);
+             _db.Set<Lists>().Remove(entity);
              await Save(entity.UserId);
         }
 

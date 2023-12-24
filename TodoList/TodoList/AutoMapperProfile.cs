@@ -2,6 +2,7 @@
 using Model.Models;
 using Model.Models.DTO.ListsDTO;
 using Model.Models.DTO.ToDoListsDTO;
+using Model.Models.DTO.TodoTasksDTO;
 
 namespace TodoList
 {
@@ -21,14 +22,18 @@ namespace TodoList
             CreateMap< Lists , GetListDTO  > ();
 
 
-            CreateMap<CreateToDoListDTO , TodoListDTO>();
+            CreateMap<CreateToDoListDTO , TodoList1>();
 
-            CreateMap<TodoListDTO , CreateToDoListDTO>();
+            CreateMap<TodoList1 , CreateToDoListDTO>();
 
 
-            CreateMap<TodoListDTO , TodoListsDTO>();
+            CreateMap<TodoListDTO , TodoList1>();
 
-            CreateMap<TodoListsDTO, TodoListDTO>();
+            CreateMap<TodoList1, TodoListDTO>();
+
+            CreateMap<TodoTasks , CreateTodoTasksDTO>();
+
+            CreateMap<CreateTodoTasksDTO, TodoTasks>();
 
 
         }
