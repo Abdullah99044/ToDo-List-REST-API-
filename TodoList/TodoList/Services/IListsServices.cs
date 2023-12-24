@@ -17,7 +17,10 @@ namespace TodoList.Services
 
         //Get  all user lists
 
-        public Task<IEnumerable<Lists>> GetUserlists(string Id);
+        public List<GetListDTO> GetUserLists(string UserId, string? listName,
+                   bool? sortingByDateTime , int page  );
+
+ 
 
         //Get  list data through the id
 
@@ -29,6 +32,8 @@ namespace TodoList.Services
 
         //Update a list
         public Task UpdateList(Lists entity);
+
+        
 
 
 

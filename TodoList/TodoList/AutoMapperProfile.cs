@@ -15,16 +15,20 @@ namespace TodoList
 
             CreateMap< ListsDTO , Lists>();
 
+
             CreateMap<GetListDTO, Lists>();
 
             CreateMap< Lists , GetListDTO  > ();
 
 
-            CreateMap<CreateToDoListDTO , TodoLists>();
+            CreateMap<CreateToDoListDTO , TodoListDTO>();
 
-            CreateMap<TodoLists , CreateToDoListDTO>();
+            CreateMap<TodoListDTO , CreateToDoListDTO>();
 
 
+            CreateMap<TodoListDTO , TodoListsDTO>();
+
+            CreateMap<TodoListsDTO, TodoListDTO>();
 
 
         }
