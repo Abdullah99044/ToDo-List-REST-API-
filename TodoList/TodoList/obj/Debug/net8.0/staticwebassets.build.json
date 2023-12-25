@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "Rev96eSJ12qs4vt+cqv4wD2kLqP4/FQjXe8jXCp5pxA=",
-  "Source": "TodoList",
-  "BasePath": "_content/TodoList",
+  "Hash": "52Ronw5Jpjjn2UttmE0iqcQAgEUJChi+Vld3IV+Khn8=",
+  "Source": "TodoList_Application_Layer",
+  "BasePath": "_content/TodoList_Application_Layer",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

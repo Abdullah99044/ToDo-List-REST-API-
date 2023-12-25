@@ -12,7 +12,13 @@ using TodoList.Data;
 using TodoList.MiddleWare;
 using TodoList.Services;
 using TodoList.Services.ToDoListsServices;
-using TodoList.Services.TodoTasksService;
+using TodoList.Model.Services.TodoTasksService;
+using TodoList.Model.Services.ToDoListsServices;
+using TodoList.Model.Services;
+using TodoList.DataAccess.Repositories;
+using TodoList.Model;
+using TodoList.DataAccess.Repositories.TodoTasksRepo;
+using TodoList.DataAccess.Repositories.TodoListRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +28,10 @@ builder.Services.AddControllers();
 
 
 //Add custom services
+
+builder.Services.AddTransient<IListsRepo , ListRepo>();
+builder.Services.AddTransient<ITodoTasksRepo, TodoTasksRepo>();
+builder.Services.AddTransient<ITodoListRepo, ToDoListRepo>();
 
 builder.Services.AddScoped< IListsServices , ListServices>();
 builder.Services.AddScoped< ITodoListServices, ToDoListServices>();

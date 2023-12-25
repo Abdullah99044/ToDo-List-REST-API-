@@ -13,6 +13,3 @@ C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\DataAccess\obj
 C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\DataAccess\obj\Debug\net8.0\DataAccess.pdb
 C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
 C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll
-C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\DataAccess\bin\Debug\net8.0\Model.dll
-C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\DataAccess\bin\Debug\net8.0\Model.pdb
-C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\DataAccess\obj\Debug\net8.0\DataAccess.csproj.CopyComplete
