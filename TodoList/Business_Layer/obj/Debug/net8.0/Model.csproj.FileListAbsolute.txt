@@ -1,0 +1,16 @@
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\bin\Debug\net8.0\Model.deps.json
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\bin\Debug\net8.0\Model.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\bin\Debug\net8.0\Model.pdb
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\Model.csproj.AssemblyReference.cache
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\Model.AssemblyInfoInputs.cache
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\Model.AssemblyInfo.cs
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\Model.csproj.CoreCompileInputs.cache
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\Model.sourcelink.json
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\Model.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\refint\Model.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\Model.pdb
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\ref\Model.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\bin\Debug\net8.0\DataAccess.dll
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\bin\Debug\net8.0\DataAccess.pdb
+C:\Users\kathi\Desktop\learning\NewTodoApp\ToDo_List_app\TodoList\Moedl\obj\Debug\net8.0\Model.csproj.CopyComplete

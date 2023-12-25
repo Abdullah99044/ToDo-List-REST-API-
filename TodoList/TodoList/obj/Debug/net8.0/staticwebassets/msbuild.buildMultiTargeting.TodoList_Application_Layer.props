@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\TodoList_Application_Layer.props" />
-</Project>

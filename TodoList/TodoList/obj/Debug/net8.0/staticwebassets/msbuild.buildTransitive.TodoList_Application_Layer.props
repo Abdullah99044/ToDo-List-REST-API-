@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\TodoList_Application_Layer.props" />
-</Project>
