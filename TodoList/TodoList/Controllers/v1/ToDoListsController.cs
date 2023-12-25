@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Model.Models;
-using Model.Models.DTO.ListsDTO;
-using Model.Models.DTO.ToDoListsDTO;
+ 
 using System.Net;
 using TodoList.Data;
+using TodoList.DataAccess.Repositories.TodoListRepo;
+using TodoList.Models.DTO.ToDoListsDTO;
 using TodoList.Services.ToDoListsServices;
 
 namespace TodoList.Controllers.v1
@@ -30,8 +31,7 @@ namespace TodoList.Controllers.v1
 
         private readonly ILogger<ToDoListsController> _Logger;
 
-        private readonly string[] pirority = [ "Important"  , "Normal" ];
-        public ToDoListsController(ITodoListServices ListServices  , ILogger<ToDoListsController>logger )
+         public ToDoListsController(ITodoListServices ListServices  , ILogger<ToDoListsController>logger )
         {
 
             _ListServices = ListServices;

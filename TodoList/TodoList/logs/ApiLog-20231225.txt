@@ -386,3 +386,12 @@ Error Number:515,State:2,Class:16
 2023-12-25 03:42:20.006 +01:00 [ERR] In TodoListscontroller in DeleteTodoList : Error 404 This Todo list doesn't exist
 2023-12-25 03:46:34.940 +01:00 [ERR] TodoTasksController  insertTodoTask : 404 Todolist  not found
 2023-12-25 03:47:14.896 +01:00 [ERR] TodoTasksController  udpateTodoTask : 404 TodoTask not found 
+2023-12-25 19:55:41.468 +01:00 [ERR] In ListController in UpdateList  : This list does not exist 
+2023-12-25 19:55:59.199 +01:00 [ERR] In ListController in DeleteList  : This list does not exist 
+2023-12-25 19:56:26.020 +01:00 [ERR] In TodoListscontroller in GetAllToDoLists : Error 404 This List doesn't exist
+2023-12-25 19:56:31.564 +01:00 [ERR] In TodoListscontroller in GetAllToDoLists : Error 404 This List doesn't exist
+2023-12-25 20:01:37.550 +01:00 [ERR] In TodoListscontroller in DeleteTodoList : Error 404 This Todo list doesn't exist
+2023-12-25 20:19:53.840 +01:00 [ERR] In TodoListscontroller in GetAllToDoLists : Error 404 This List doesn't exist
+2023-12-25 20:20:17.508 +01:00 [ERR] In TodoListscontroller in DeleteTodoList : Error 404 This Todo list doesn't exist
+2023-12-25 20:36:30.928 +01:00 [ERR] In ListController in GetLists : Error 404 User not found 
+2023-12-25 20:37:25.720 +01:00 [ERR] In TodoListscontroller in DeleteTodoList : Error 404 This Todo list doesn't exist

@@ -3,20 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Model.Models.DTO.TodoTasksDTO;
+using Todolist.Model.DTO.TodoTasksDTO;
 using System.Net;
-using TodoList.Services.TodoTasksService;
+using TodoList.Model.Services.TodoTasksService;
 
 
-
-//Rate limiting ok
-//Versioning ok
-//Authrization ok
-//Validation ok
-//Logger
-//Service ok
-// Anti XSS ok 
-//End points ok
+ 
 
 namespace TodoList.Controllers.v1
 {

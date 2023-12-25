@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Model.Models;
-using Model.Models.DTO.ListsDTO;
-using Model.Models.DTO.ToDoListsDTO;
-using Model.Models.DTO.TodoTasksDTO;
+using Todolist.Model.DTO.TodoTasksDTO;
+using TodoList.Model.DTO.ListsDTO;
+using TodoList.Models.DTO.ToDoListsDTO;
 
 namespace TodoList
 {

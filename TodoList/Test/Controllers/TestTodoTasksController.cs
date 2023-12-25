@@ -4,14 +4,15 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Model.Models;
-using Model.Models.DTO.TodoTasksDTO;
+ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Todolist.Model.DTO.TodoTasksDTO;
 using TodoList.Controllers.v1;
-using TodoList.Services.TodoTasksService;
+using TodoList.Model.Services.TodoTasksService;
 
 namespace Test.Controllers
 {

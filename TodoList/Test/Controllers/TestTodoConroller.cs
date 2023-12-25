@@ -5,13 +5,14 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Model.Models;
-using Model.Models.DTO.ToDoListsDTO;
+ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TodoList.Controllers.v1;
+using TodoList.Models.DTO.ToDoListsDTO;
 using TodoList.Services.ToDoListsServices;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 

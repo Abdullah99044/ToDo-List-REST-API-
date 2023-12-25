@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Model.Models;
-using Model.Models.DTO.ListsDTO;
+
 using System.Linq;
 using System.Net;
 using TodoList.Data;
-using TodoList.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using TodoList.Model.Services;
+using TodoList.Model.DTO.ListsDTO;
+using TodoList.Model.DTO;
+
 
 namespace TodoList.Controllers.v1
 {
@@ -82,7 +83,7 @@ namespace TodoList.Controllers.v1
 
             //Request the data  from the database or from the cached memorey
 
-            var userLists = _ListServices.GetUserLists(  getUserId, listName ,
+            var userLists = await _ListServices.GetUserLists(  getUserId, listName ,
                                                         sortingByLetters ,  page  );
 
             //Enable Pagination for Cached data or requested data from the data base 
