@@ -40,7 +40,7 @@ namespace TodoList.Controllers.v1
         }
 
 
-        //Get all lists
+        //Get all user lists from the database or cache memorey with pagination
 
         [HttpGet("{email}" )]
         [ProducesResponseType(200)]
@@ -50,11 +50,11 @@ namespace TodoList.Controllers.v1
         [ProducesResponseType(500)]
         
 
-
         public async Task<ActionResult<pageResponse>> GetLists( string email, [FromQuery] string? listName , 
             [FromQuery] bool? sortingByLetters ,  [FromQuery] string  inputPage)
         {
 
+            //Inputs validation
 
             if (string.IsNullOrEmpty(email))
             {
@@ -70,6 +70,8 @@ namespace TodoList.Controllers.v1
 
             var page = int.Parse(inputPage);
 
+            //Check if user exists
+
             var getUserId = await _ListServices.GetUserId(email);
 
             if (string.IsNullOrEmpty(getUserId))
@@ -78,8 +80,12 @@ namespace TodoList.Controllers.v1
                 return NotFound("User not found");
             }
 
+            //Request the data  from the database or from the cached memorey
+
             var userLists = _ListServices.GetUserLists(  getUserId, listName ,
                                                         sortingByLetters ,  page  );
+
+            //Enable Pagination for Cached data or requested data from the data base 
 
             var pageResult = 5;
             var totalCount = userLists.Count;
@@ -93,16 +99,15 @@ namespace TodoList.Controllers.v1
                 currentPage = page,
                 pages = pageCount
             };
+ 
 
-
-            _logger.LogInformation("In ListController in GetLists : 200 Ok respons ");
             return Ok(response);
 
         }
-       
+ 
 
 
-        //Create a list
+        //Create a list 
 
         [HttpPost()]
         [ProducesResponseType(200)]
@@ -113,6 +118,8 @@ namespace TodoList.Controllers.v1
      
         public async Task<IActionResult> CreateList([FromBody] ListsDTO Data)
         {
+
+            //Inputs validation
 
             if (Data == null)
             {
@@ -126,6 +133,8 @@ namespace TodoList.Controllers.v1
             Data.name = WebUtility.HtmlEncode(Data.name);
 
 
+            //Check if user exists
+
             string GetUserID = await _ListServices.GetUserId(Data.email);
 
             if (GetUserID == "")
@@ -134,13 +143,13 @@ namespace TodoList.Controllers.v1
                 return NotFound("User Not found");
             }
 
-
+            //Insert the the list
             await _ListServices.InsertlIST(GetUserID, Data);
 
-            _logger.LogInformation("In ListController in CreateList : 200 Ok respons ");
-
-            return Ok();
+ 
+            return Ok("List inserted successfully");
         }
+
 
 
         //Delete a list
@@ -154,9 +163,10 @@ namespace TodoList.Controllers.v1
         public async Task<IActionResult> DeleteList(int Id)
         {
 
+
+            //Inputs validation
+
             var CheckId = await _ListServices.GetAlist(Id);
-
-
 
             if (CheckId == null)
             {
@@ -164,14 +174,17 @@ namespace TodoList.Controllers.v1
                 return NotFound("This list does not exist ");
             }
 
+            //Delete the List
 
             await _ListServices.DeleteList(CheckId);
 
-
             _logger.LogInformation("In ListController in DeleteList : 200 Ok respons ");
 
-            return Ok();
+            return Ok("List deleted successfully");
         }
+
+
+
 
         //Update a list
 
@@ -185,7 +198,9 @@ namespace TodoList.Controllers.v1
         public async Task<IActionResult> UpdateList([FromBody] UpdateListDTO List)
         {
 
-            if(List == null)
+            //Inputs validation
+
+            if (List == null)
             {
                 _logger.LogError("In ListController in UpdateList : Error 400  No data to update a List  ");
                 return BadRequest("No data to update a List");
@@ -200,6 +215,7 @@ namespace TodoList.Controllers.v1
 
             var getListData = await _ListServices.GetAlist(List.id);
 
+            //Check if the list exist
 
             if (getListData == null)
             {
@@ -207,15 +223,18 @@ namespace TodoList.Controllers.v1
                 return NotFound("This list doenot exist ");
             }
 
+            // Update the list data
+
             getListData.name = List.name;
             getListData.UpdatedAt = DateTime.Now;
 
+            //Update the list in the database 
 
             await _ListServices.UpdateList(getListData);
 
             _logger.LogInformation("In ListController in UpdateList : 200 Ok respons ");
 
-            return Ok();
+            return Ok("List updated successfully");
         }
 
     }

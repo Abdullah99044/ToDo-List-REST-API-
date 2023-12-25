@@ -42,7 +42,7 @@ namespace Test.Controllers
             var TodoListData = A.Fake<TodoList1>();
 
 
-            A.CallTo(() => _TodoTasksServices.checkTodoListId(TodoListId)).Returns(TodoListData);
+            A.CallTo(() => _TodoTasksServices.getTodoList(TodoListId)).Returns(TodoListData);
 
             A.CallTo(() => _TodoTasksServices.insertTodoTask(TodoListId , createTodoTasks , 1)).Returns(true);
 
@@ -71,12 +71,12 @@ namespace Test.Controllers
             var updateTodoTasks = A.Fake<updateTodoTasksDTO>();
 
 
-            var TodoListData = A.Fake<TodoTasks>();
+            var TodoTaskData = A.Fake<TodoTasks>();
 
 
-            A.CallTo(() => _TodoTasksServices.checkTodoTasksId(1)).Returns(TodoListData);
+            A.CallTo(() => _TodoTasksServices.getTodoTasks(1)).Returns(TodoTaskData);
 
-            A.CallTo(() => _TodoTasksServices.updateTodoTask(TodoListData , 1)).Returns(true);
+            A.CallTo(() => _TodoTasksServices.updateTodoTask(TodoTaskData, 1)).Returns(true);
 
 
             var controller = new ToDoTasksController(_TodoTasksServices, _logger);
@@ -103,12 +103,12 @@ namespace Test.Controllers
             var deleteTodoTaskId = 1 ;
 
 
-            var TodoListData = A.Fake<TodoTasks>();
+            var TodoTasksData = A.Fake<TodoTasks>();
 
 
-            A.CallTo(() => _TodoTasksServices.checkTodoTasksId(1)).Returns(TodoListData);
+            A.CallTo(() => _TodoTasksServices.getTodoTasks(1)).Returns(TodoTasksData);
 
-            A.CallTo(() => _TodoTasksServices.deleteTodoTask(TodoListData , 1)).Returns(true);
+            A.CallTo(() => _TodoTasksServices.deleteTodoTask(TodoTasksData, 1)).Returns(true);
 
 
             var controller = new ToDoTasksController(_TodoTasksServices, _logger);

@@ -166,7 +166,7 @@ namespace Test.Controllers
 
             //Assert
 
-            result.Should().BeOfType<OkResult>();
+            result.Should().BeOfType<OkObjectResult>();
 
 
         }
@@ -201,7 +201,7 @@ namespace Test.Controllers
 
             //Assert
 
-            result.Should().BeOfType<OkResult>();  
+            result.Should().BeOfType<OkObjectResult>();  
             
           
             

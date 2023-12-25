@@ -13,7 +13,7 @@ using TodoList.Services.ToDoListsServices;
 
 namespace TodoList.Controllers.v1
 {
-    [Route("api/v{version:apiVersion}/Lists/[controller]")]
+    [Route("api/v{version:apiVersion}/Lists/")]
     [ApiController]
     [ApiVersion("1.0")]
     [Authorize]
@@ -41,7 +41,9 @@ namespace TodoList.Controllers.v1
         }
 
 
-        [HttpGet("{ListId}")]
+        //Get all todolists from a list
+
+        [HttpGet("{ListId}/[controller]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -49,13 +51,16 @@ namespace TodoList.Controllers.v1
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetAllToDoLists(int ListId)
         {
-
+            //Inputs validation
 
             if (ListId == 0)
             {
                 _Logger.LogError("In TodoListscontroller in GetAllToDoLists : Error 400 The List Id is invalid");
                 return BadRequest("The List Id is invalid");
             }
+
+
+            //Check if the list does exist in the database
 
             var List = await _ListServices.GetListById(ListId);
 
@@ -65,6 +70,9 @@ namespace TodoList.Controllers.v1
                 return NotFound("This List doesn't exist");
             }
 
+
+            //Request the todo lists from the database 
+
             var toDoLists = await _ListServices.GetAllTodoLists(ListId);
 
             return Ok(toDoLists);
@@ -72,9 +80,9 @@ namespace TodoList.Controllers.v1
 
         }
 
-        //Create a list
+        //Create a todo list
 
-        [HttpPost("{ListId}")]
+        [HttpPost("{ListId}/[controller]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -85,7 +93,8 @@ namespace TodoList.Controllers.v1
         public async Task<IActionResult> CreateList(int ListId, [FromBody] CreateToDoListDTO Data)
         {
 
-            
+            //Inputs validation
+
             if (ListId == 0)
             {
 
@@ -99,11 +108,8 @@ namespace TodoList.Controllers.v1
                 return NotFound("This List doesn't exist");
             }
 
-            // Encode the input to prevent XSS
 
-            Data.Name = WebUtility.HtmlEncode(Data.Name);
-           // Data.color = WebUtility.HtmlEncode(Data.color);
-
+            //Check if the List does exist  in the database
 
             var List = await _ListServices.GetListById(ListId);
 
@@ -112,10 +118,18 @@ namespace TodoList.Controllers.v1
                 return NotFound();
             }
 
+            // Encode the input to prevent XSS
+
+            Data.Name = WebUtility.HtmlEncode(Data.Name);
+            Data.color = WebUtility.HtmlEncode(Data.color);
+
+
+            //Insert the todo list
+
             await _ListServices.InsertTodoList(ListId , Data);
 
 
-            return Ok("Good");
+            return Ok("Todo list inserted successfully");
 
 
 
@@ -124,9 +138,9 @@ namespace TodoList.Controllers.v1
 
 
 
+        //Update a todo list
 
-
-        [HttpPut()]
+        [HttpPut("/[controller]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -136,12 +150,17 @@ namespace TodoList.Controllers.v1
         public async Task<IActionResult> UpdateTodoList([FromBody] UpdateToDoListDTO Data)
         {
 
- 
+
+            //Inputs validation
+
             if (Data == null)
             {
                 _Logger.LogError("In TodoListscontroller in UpdateTodoList : Error 400  invalid Todo list ");
                 return BadRequest("Invalid Todo list ");
             }
+
+
+            //Check if the todo list exist in the database
 
             var GetTodoList = await _ListServices.GetTodoListById(Data.Id);
 
@@ -154,8 +173,9 @@ namespace TodoList.Controllers.v1
             // Encode the input to prevent XSS
 
             Data.Name = WebUtility.HtmlEncode(Data.Name);
-            //Data.color = WebUtility.HtmlEncode(Data.color);
+            Data.color = WebUtility.HtmlEncode(Data.color);
 
+            //Update the todo list data
 
             GetTodoList.Name = Data.Name;
             GetTodoList.color = Data.color;
@@ -167,12 +187,15 @@ namespace TodoList.Controllers.v1
             await _ListServices.UpdateTodoList(GetTodoList);
 
 
-            return Ok();
+            return Ok("Todo list Updated successfully");
 
 
         }
 
-        [HttpDelete("{Id}")]
+
+        //Delete a todo list
+
+        [HttpDelete("[controller]/{Id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -182,12 +205,15 @@ namespace TodoList.Controllers.v1
         public async Task<IActionResult> DeleteTodoList(int Id)
         {
 
+            //Inputs validation
 
             if (Id == null)
             {
                 _Logger.LogError("In TodoListscontroller in DeleteTodoList : Error 400  invalid Todo list Id ");
                 return BadRequest("Invalid Todo list Id");
             }
+
+            //Check if the todo list exist in the database
 
             var GetTodoList = await _ListServices.GetTodoListById(Id);
 
@@ -197,17 +223,13 @@ namespace TodoList.Controllers.v1
                 return NotFound("This Todo list doesn't exist");
             }
 
+            //Delete the todo list
 
             await _ListServices.DeleteTodoList(GetTodoList);
 
-
-            return Ok();
-
+            return Ok("Todo list deleted successfully");
 
         }
-
-
-
 
 
     }

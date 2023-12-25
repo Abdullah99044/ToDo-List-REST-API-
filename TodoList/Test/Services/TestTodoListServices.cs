@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TodoList.Data;
+using TodoList.MiddleWare;
 using TodoList.Services.ToDoListsServices;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -22,11 +23,11 @@ namespace Test.Services
 
         private IMapper _mapper;
 
-        private IMemoryCache _memoreyCache;
+        private MyMemoryCache _memoreyCache;
         public TestTodoListServices()
         {
             _mapper = A.Fake<IMapper>();
-            _memoreyCache = A.Fake<IMemoryCache>();
+            _memoreyCache = A.Fake<MyMemoryCache>();
         }
         private async Task<ApplicationDbContext> GetInMemoryDbContext()
         {
