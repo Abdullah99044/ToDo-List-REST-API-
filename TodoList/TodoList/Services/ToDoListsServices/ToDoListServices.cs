@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.Serialization.Formatters.Binary;
 using TodoList.Data;
+using TodoList.MiddleWare;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TodoList.Services.ToDoListsServices
@@ -25,10 +27,10 @@ namespace TodoList.Services.ToDoListsServices
 
         private readonly IMapper _mapper;
 
-        private readonly IMemoryCache _memoryCache;
+        private readonly MyMemoryCache _memoryCache;
 
 
-        public ToDoListServices(ApplicationDbContext db, IMapper mapper , IMemoryCache memoryCache)
+        public ToDoListServices(ApplicationDbContext db, IMapper mapper , MyMemoryCache memoryCache)
         {
             _db = db;
             _mapper = mapper;
@@ -36,6 +38,21 @@ namespace TodoList.Services.ToDoListsServices
 
         }
 
+
+        //Store data in the cache memory
+        private void cacheData<T>(string cacheKey, T cachedData)
+        {
+
+            //Set the size and the Expired time
+            var cacheOptions = new MemoryCacheEntryOptions()
+                                .SetSize(1)
+                                .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+            _memoryCache.Cache.Set(cacheKey, cachedData, cacheOptions);
+
+        }
+
+
+        //Get all todo lists
 
         public async Task<IEnumerable<TodoListDTO>> GetAllTodoLists(int Id )
         {
@@ -51,22 +68,28 @@ namespace TodoList.Services.ToDoListsServices
 
 
 
+
+            //Cache key for storing the cache
+
+            string cacheKey = $"Key_ListId_{Id}";
+
+
             //Check if the data inside the inmemeorey cache 
 
-           string cacheKey = $"Key_ListId_{Id}";
-
-
-            if (_memoryCache.TryGetValue(cacheKey, out IEnumerable<TodoListDTO> cache))
+            if (_memoryCache.Cache.TryGetValue(cacheKey, out IEnumerable<TodoListDTO> cache))
             {
 
-  
-                //return cache;
-                
-                
+                return cache;
+                       
             }
 
-            var queryAll =    _db.TodoList.AsNoTracking().Where(u => u.ListId == Id).Include(tl => tl.TodoTasks);
- 
+
+            // Execute the query and retrieve all data
+
+            var queryAll =  _db.TodoList.AsNoTracking().Where(u => u.ListId == Id).Include(tl => tl.TodoTasks);
+
+
+            //Mapping the data with a mapper to Json serialized error doesn't occur
             var TodoList = await queryAll.ToListAsync();
 
             IEnumerable<TodoListDTO> userTodoLits = TodoList.Select(TodoList => new TodoListDTO()
@@ -90,17 +113,33 @@ namespace TodoList.Services.ToDoListsServices
                 }).ToList()
             });
 
-            var cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(2));
-            _memoryCache.Set(cacheKey, userTodoLits, cacheOptions);
+            // Cache the data
 
-
-           
+            cacheData(cacheKey, userTodoLits);
 
             return userTodoLits;
 
 
         }
 
+
+
+        //Get a List
+        public async Task<Lists> GetListById(int ListId)
+        {
+
+            return await _db.Lists.FindAsync(ListId);
+
+        }
+
+
+        //Get a Todo list
+        public async Task<TodoList1> GetTodoListById(int Id)
+        {
+
+            return await _db.TodoList.FindAsync(Id);
+
+        }
 
         //Save changes after every action in the database
         public async Task<bool> Save(int ListId)
@@ -110,24 +149,17 @@ namespace TodoList.Services.ToDoListsServices
 
             if(saved > 0)
             {
+                string cacheKey = $"Key_ListId_{ListId}";
 
-                //Remove the cached data when it's updated
-                _memoryCache.Remove($"Key_ListId_{ListId}");
+                _memoryCache.Cache.Remove(cacheKey);
                 return true;
             }
 
             return false;
         }
 
-        public async Task<Lists> GetListById(int Id)
-        {
 
-
-            return await _db.Lists.FindAsync(Id);
-
-               
-        }
-
+        //Post a todo list to the data base 
         public async Task<bool> InsertTodoList(int Id, CreateToDoListDTO Data)
         {
 
@@ -146,34 +178,9 @@ namespace TodoList.Services.ToDoListsServices
             return await Save(ToDoListData.ListId);
         }
 
-      
-        public async Task<TodoList1> GetTodoListById(int Id)
-        {
-
-            //Cache the todolist data 
 
 
-            var cacheKey = $"TodoListID_{Id}";
-
-            if (_memoryCache.TryGetValue(cacheKey, out TodoList1 cachedTodoList))
-            {
-                return cachedTodoList;
-            }
-
-            var todoList = await _db.TodoList.FindAsync(Id);
-
-            if (todoList == null)
-            {
-                return null;
-            }
-
-            var cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(2));
-            _memoryCache.Set(cacheKey, todoList, cacheOptions);
-
-            return todoList; 
-           
-        }
-
+        //Update a todo list to the data base 
         public async Task<bool> UpdateTodoList(TodoList1 Data)
         {
             _db.Update(Data);
@@ -181,13 +188,10 @@ namespace TodoList.Services.ToDoListsServices
             return await Save(Data.ListId);
         }
 
+        //Delete a todo list from the data base 
         public async Task<bool> DeleteTodoList(TodoList1 Data)
         {
-
-
-            //The app stores the the todolist data in sevral function , when it's removed it will also be removed from the cache data
-            _memoryCache.Remove($"TodoListID_{Data.Id}");
-
+ 
 
             _db.Remove(Data);
             return await Save(Data.ListId);

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using TodoList.Data;
+using TodoList.MiddleWare;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TodoList.Services
@@ -26,50 +27,29 @@ namespace TodoList.Services
 
         private readonly IMapper _mapper;
 
-        private readonly IMemoryCache _memoryCache;
-        public ListServices(ApplicationDbContext db, IMapper mapper , IMemoryCache memoryCache) 
+        private readonly MyMemoryCache _memoryCache;
+        public ListServices(ApplicationDbContext db, IMapper mapper , MyMemoryCache memoryCache) 
         {
             _db = db;
             _mapper = mapper;
             _memoryCache = memoryCache;
         }
 
-
-        //Post a List to the data base 
-
-
-        public async Task InsertlIST( string Id  , ListsDTO Data)
+        //Store data in the cache memory
+        private void cacheData<T>(string cacheKey, T cachedData)
         {
+            //Set the size and the Expired time
+            var cacheOptions = new MemoryCacheEntryOptions()
+                                    .SetSize(1)
+                                    .SetSlidingExpiration(TimeSpan.FromMinutes(5));
 
-            var List = _mapper.Map<Lists>(Data);
-
-            List.CreatedAt = DateTime.Now;
-            List.UpdatedAt = DateTime.Now;
-            List.UserId = Id;
-
-            await _db.Lists.AddAsync(List);
-            await Save(List.UserId);
+            _memoryCache.Cache.Set(cacheKey, cachedData, cacheOptions);
 
         }
 
-
-        //Get the user id for to create a list or get his lists
-
-        public async Task<string> GetUserId(string Email)
-        {
-            var data = await _db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == Email);
-
-            if (data == null)
-            {
-                return "";
-            }
-
-            return data.Id;
-        }
 
 
         //Get  all user lists
-
         public List<GetListDTO> GetUserLists(string UserId, string? listName, bool? sortingByLetters, int page  )
         {
 
@@ -90,15 +70,16 @@ namespace TodoList.Services
             //the Save() method delete the data in the memory cache if it was changed, removed or added to in the dataBase
 
 
+            //Cache key for storing the cache
             var cacheKey = $"Key_{UserId}";
 
             // Check if data is in the in-memory cache
-            if (_memoryCache.TryGetValue(cacheKey, out List<GetListDTO> cachedResponse))
+            if (_memoryCache.Cache.TryGetValue(cacheKey, out List<GetListDTO> cachedResponse))
             {
-                // Make a deep copy of the cached response
+                // Make a deep copy of the cached response to filter and sort it with out effecting the sotred cahced data
                 var filteredResponse = cachedResponse;
 
-
+                //Filter and sort the cahced data
                 filteredResponse = ApplyFiltering(  filteredResponse, listName);
 
                 filteredResponse =  ApplySorting(  filteredResponse, sortingByLetters);
@@ -112,16 +93,18 @@ namespace TodoList.Services
             var allData = query.Select(userList => _mapper.Map<GetListDTO>(userList)).ToList();
 
             // Cache the data
-            var cacheOptions = new MemoryCacheEntryOptions()
-                .SetSlidingExpiration(TimeSpan.FromMinutes(2));
-            _memoryCache.Set(cacheKey, allData, cacheOptions);
+            cacheData(cacheKey, allData);
 
+            //Filter and sort the requested data
 
             var filteerdData = ApplyFiltering(allData, listName);
                 filteerdData = ApplySorting(allData, sortingByLetters);
 
             return filteerdData;
         }
+
+
+
 
         // Applying filtering  
 
@@ -147,7 +130,28 @@ namespace TodoList.Services
             
         }
 
-     
+
+        //Get the user id for to create a list or get his lists
+
+        public async Task<string> GetUserId(string Email)
+        {
+            var data = await _db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == Email);
+
+            if (data == null)
+            {
+                return null;
+            }
+
+            return data.Id;
+        }
+
+
+        //Get list data with its id
+        public async Task<Lists> GetAlist(int ListId)
+        {
+            return await _db.Lists.FindAsync(ListId);
+
+        }
 
         //Save changes after every action in the database
         public async Task<bool> Save( string userID )
@@ -159,34 +163,44 @@ namespace TodoList.Services
             {
 
                 //Remove the cached data when it's updated
-                _memoryCache.Remove($"Key_{userID}");
+                _memoryCache.Cache.Remove($"Key_{userID}");
                 return true;
             }
 
             return false;
         }
 
-        //Get list data through the id
+       
 
+        //Post a List into the data base 
 
-        public async Task<Lists> GetAlist(int Id)
+        public async Task InsertlIST(string Id, ListsDTO Data)
         {
+            //Mapping  
+            var List = _mapper.Map<Lists>(Data);
 
-            return await _db.Lists.FindAsync(Id);
+            List.CreatedAt = DateTime.Now;
+            List.UpdatedAt = DateTime.Now;
+            List.UserId = Id;
+
+            await _db.Lists.AddAsync(List);
+            await Save(List.UserId);
 
         }
 
+
         //Delete a list 
-
-
         public async Task DeleteList(Lists entity)
         {
+
+        
+
              _db.Set<Lists>().Remove(entity);
              await Save(entity.UserId);
         }
 
-        //Update a list
 
+        //Update a list
         public async Task UpdateList(Lists entity)
         {
             _db.Lists.Update(entity);

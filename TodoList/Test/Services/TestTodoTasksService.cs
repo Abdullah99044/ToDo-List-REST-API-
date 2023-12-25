@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TodoList.Data;
+using TodoList.MiddleWare;
 using TodoList.Services.TodoTasksService;
 
 namespace Test.Services
@@ -20,13 +21,13 @@ namespace Test.Services
     {
 
         public readonly IMapper _mapper;
-        public readonly IMemoryCache _cache;
+        public readonly MyMemoryCache _cache;
 
 
         public TestTodoTasksService()
         {
             _mapper = A.Fake<IMapper>();
-            _cache = A.Fake<IMemoryCache>();
+            _cache = A.Fake<MyMemoryCache>();
 
 
         }

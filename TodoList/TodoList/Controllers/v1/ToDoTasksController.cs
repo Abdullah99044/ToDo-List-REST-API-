@@ -20,7 +20,7 @@ using TodoList.Services.TodoTasksService;
 
 namespace TodoList.Controllers.v1
 {
-    [Route("api/{version:apiVersion}/Lists/TodoLists/[controller]")]
+    [Route("api/{version:apiVersion}/Lists/TodoLists/")]
     [ApiController]
     [ApiVersion("1.0")]
     [EnableRateLimiting("FixedWindow")]
@@ -37,7 +37,10 @@ namespace TodoList.Controllers.v1
 
         }
 
-        [HttpPost("{TodoListId}")]
+
+        //Create todo task
+
+        [HttpPost("{TodoListId}/[controller]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(402)]
@@ -49,20 +52,25 @@ namespace TodoList.Controllers.v1
         public async Task<IActionResult> insertTodoTask(int TodoListId, CreateTodoTasksDTO TodoTask)
         {
 
+            //Inputs validation
+
             if (TodoTask == null)
             {
-                return BadRequest();
+                _logger.LogError("TodoTasksController  insertTodoTask : 400 invalid TodoTask data");
+                return BadRequest(" Invalid TodoTask data");
             }
 
-            //check the todoListId
+            //check if the todo task exist in the database 
 
-            var GetTodoListId = await _TodoTasksServices.checkTodoListId(TodoListId);
+            var GetTodoListId = await _TodoTasksServices.getTodoList(TodoListId);
 
             if (GetTodoListId == null)
             {
-                return NotFound();
+                _logger.LogError("TodoTasksController  insertTodoTask : 404 Todolist  not found");
+                return NotFound(" Todolist  not found ");
             };
 
+            // Encode the input to prevent XSS
 
             TodoTask.Name = WebUtility.HtmlEncode(TodoTask.Name);
 
@@ -71,11 +79,14 @@ namespace TodoList.Controllers.v1
             await _TodoTasksServices.insertTodoTask(TodoListId, TodoTask , GetTodoListId.ListId);
 
 
-            return Ok("Todo task inserted");
+            return Ok("Todo task inserted successfully");
         }
 
 
-        [HttpPut("{TodoListId}")]
+        //Update a todo task
+
+
+        [HttpPut("{TodoListId}/[controller]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(402)]
@@ -87,38 +98,48 @@ namespace TodoList.Controllers.v1
         public async Task<IActionResult> udpateTodoTask(int TodoListId, updateTodoTasksDTO TodoTask )
         {
 
+            //Inputs validation
+
             if (TodoTask == null)
             {
-                return BadRequest();
+                _logger.LogError("TodoTasksController  udpateTodoTask : 400 invalid TodoTask data");
+                return BadRequest("Invalid TodoTask data");
             }
+
+
+            //check if the todo task exist in the database 
+
+            var GetTodoListId = await _TodoTasksServices.getTodoList(TodoListId);
+
 
             //Get the List Id to update the cache data
 
-            var GetTodoListId = await _TodoTasksServices.checkTodoListId(TodoListId);
-
-
-            var getTodoTasks = await _TodoTasksServices.checkTodoTasksId(TodoTask.Id);
+            var getTodoTasks = await _TodoTasksServices.getTodoTasks(TodoTask.Id);
 
             if (getTodoTasks == null || GetTodoListId == null )
             {
-                return NotFound();
+                _logger.LogError("TodoTasksController  udpateTodoTask : 404 TodoTask not found ");
+                return NotFound("TodoTask not found ");
             }
+
+            //Update the todo task data
 
             getTodoTasks.Name = WebUtility.HtmlEncode(TodoTask.Name);
             getTodoTasks.status = WebUtility.HtmlEncode(TodoTask.status);
             getTodoTasks.Updated = DateTime.Now;
 
-            //update the todo task in the database
+            //Update the todo task in the database
 
             await _TodoTasksServices.updateTodoTask(getTodoTasks , GetTodoListId.ListId );
 
-            return Ok("Todo task updated");
+            return Ok("Todo task updated successfully");
         }
 
 
 
+        //Delete a todo task
 
-        [HttpDelete("{TodoTaskId}")]
+        [HttpDelete("[controller]/{TodoTaskId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(402)]
@@ -130,32 +151,35 @@ namespace TodoList.Controllers.v1
         public async Task<IActionResult> daleteTodoTask(int TodoTaskId )
         {
 
+            //Inputs validation
+
             if (TodoTaskId == null  )
             {
-                return BadRequest();
+                _logger.LogError("TodoTasksController  daleteTodoTask : 400 invalid TodoTask data");
+                return BadRequest("Invalid TodoTask data");
             }
 
-            var getTodoTasks = await _TodoTasksServices.checkTodoTasksId(TodoTaskId);
+            //check if the todo task exist in the database 
+
+            var getTodoTasks = await _TodoTasksServices.getTodoTasks(TodoTaskId);
 
 
-            //Get the List Id to update the cache data
+            //Get the todo List Id to update the cache data
 
-            var GetTodoListId = await _TodoTasksServices.checkTodoListId(getTodoTasks.todoListId);
+            var GetTodoListId = await _TodoTasksServices.getTodoList(getTodoTasks.todoListId);
 
 
             if (getTodoTasks == null || GetTodoListId  == null )
             {
-                return NotFound();
+                _logger.LogError("TodoTasksController  udpateTodoTask : 404 not found TodoTask or todoList ");
+                return NotFound(" TodoTask or todoList not found ");
             }
 
-            //update the todo task in the database
+            //Delete the todo task in the database
 
             await _TodoTasksServices.deleteTodoTask(getTodoTasks , GetTodoListId.ListId );
 
-            return Ok("Todo task Deleted");
+            return Ok("Todo task Deleted successfully");
         }
-
-
-
     }
 }

@@ -101,7 +101,7 @@ builder.Services.AddTransient<securityHeadersMiddleWare>();
 
 //Add Inmemeory cache
 
-builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<MyMemoryCache>();
 
 
 //Add rate limiting based on Ip address

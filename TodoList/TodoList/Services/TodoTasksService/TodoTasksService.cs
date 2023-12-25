@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Model.Models;
 using Model.Models.DTO.TodoTasksDTO;
 using TodoList.Data;
+using TodoList.MiddleWare;
 
 namespace TodoList.Services.TodoTasksService
 {
@@ -12,10 +13,10 @@ namespace TodoList.Services.TodoTasksService
 
         public readonly ApplicationDbContext _db;
 
-        public readonly IMemoryCache _memoryCache;
+        public readonly MyMemoryCache _memoryCache;
 
         public readonly IMapper _mapper;
-        public TodoTasksService(ApplicationDbContext  db, IMapper mapper   , IMemoryCache memoreyCache)
+        public TodoTasksService(ApplicationDbContext  db, IMapper mapper   , MyMemoryCache memoreyCache)
         {
             _db = db;
             _mapper = mapper;
@@ -23,74 +24,25 @@ namespace TodoList.Services.TodoTasksService
         }
 
 
-      
+        //Get a todolist from the data base 
 
-       
-        public async Task<TodoList1> checkTodoListId(int id)
+        public async Task<TodoList1> getTodoList(int id)
         {
 
-
-            //Cache the todolist data 
-
-
-            var cacheKey = $"TodoListID_{id}";
-
-            if (_memoryCache.TryGetValue(cacheKey, out TodoList1 cachedTodoList ))
-            {
-                return cachedTodoList;
-            }
-
-            var todoList = await _db.TodoList.FindAsync(id);
-
-            if(todoList == null)
-            {
-                return null;
-            }
-
-            var cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(2));
-            _memoryCache.Set(cacheKey, todoList, cacheOptions);
-
-            return todoList ;
+            return await _db.TodoList.FindAsync(id); 
         }
 
 
+        //Get a todoTask from the data base 
 
-        public async Task<TodoTasks> checkTodoTasksId(int Id)
+        public async Task<TodoTasks> getTodoTasks(int Id)
         {
 
-
-            //Cache the todoTasks data 
-
-            var cacheKey = $"TodoTasksID_{Id}";
-
-            if (_memoryCache.TryGetValue(cacheKey, out TodoTasks cachedTodoTasks))
-            {
-                return cachedTodoTasks;
-            }
-
-            var todoTask = await _db.TodoTasks.FindAsync(Id);
-
-            if (todoTask == null)
-            {
-                return null;
-            }
-
-            var cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(2));
-            _memoryCache.Set(cacheKey, todoTask, cacheOptions);
-
-            return todoTask;
-            
+            return await _db.TodoTasks.FindAsync(Id);
         }
 
 
-        //How does the cache works in todolistServices ?
-
-        //When a user request a TodoTask or TodoList data , the app stored in in memorey cache
-
-        //If the user updated the todotasks the cached data of All todod lists will removed so the user can see the updated data
-
-        //If the user remove a todoList the cached data of  todod lists will removed so he can request new data for other function in this class
-
+        //Save changes in the database
 
         public async Task<bool> save(int ListId , int TodoTasksID  )
         {
@@ -100,17 +52,19 @@ namespace TodoList.Services.TodoTasksService
             if (save > 0 )
             {
 
-                //Update cached data 
+                string cacheKey = $"Key_ListId_{ListId}";
 
-                _memoryCache.Remove($"Key_ListId_{ListId}") ;
-                _memoryCache.Remove($"TodoTasksID_{TodoTasksID}");
-               
-
+                _memoryCache.Cache.Remove(cacheKey);
                 return true;
             }
 
             return false;
         }
+
+
+
+
+        //Post a todo task into the data base 
 
         public async Task<bool> insertTodoTask(int todoListId, CreateTodoTasksDTO entity, int ListId)
         {
@@ -128,6 +82,11 @@ namespace TodoList.Services.TodoTasksService
             return await save(ListId , todoTask.Id );
         }
 
+
+
+
+        //Update a todo task to the data base 
+
         public async Task<bool> updateTodoTask(TodoTasks entity , int ListId)
         {
 
@@ -135,6 +94,9 @@ namespace TodoList.Services.TodoTasksService
 
             return await save(ListId , entity.Id  );
         }
+
+
+        //Delete a todo task from the data base 
 
         public async Task<bool> deleteTodoTask(TodoTasks TodoTask, int ListId)
         {

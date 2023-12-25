@@ -8,18 +8,25 @@ namespace TodoList.Services.ToDoListsServices
     {
 
 
-        public Task<bool> Save(int ListId);
+        //Get all todo lists
+        public Task<IEnumerable<TodoListDTO>> GetAllTodoLists(int Id);
 
-        public Task<bool> InsertTodoList(int Id , CreateToDoListDTO Data);
-
+        //Get a List
         public Task<Lists> GetListById(int Id);
 
-        public Task<IEnumerable<TodoListDTO>> GetAllTodoLists(int Id );
-
+        //Get a Todo list
         public Task<TodoList1> GetTodoListById(int Id);
 
+        //Save changes in the database
+        public Task<bool> Save(int ListId);
+
+        //Post a todo list to the data base 
+        public Task<bool> InsertTodoList(int Id , CreateToDoListDTO Data);
+      
+        //Update a todo list to the data base 
         public Task<bool> UpdateTodoList(TodoList1 Data);
 
+        //Delete a todo list from the data base 
         public Task<bool> DeleteTodoList(TodoList1 Data);
 
 
