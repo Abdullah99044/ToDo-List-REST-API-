@@ -26,9 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\Data_Access_Layer.csproj" />
-    <ProjectReference Include="..\Moedl\Business_Layer.csproj" />
-    <ProjectReference Include="..\TodoList\TodoList_Application_Layer.csproj" />
+    <ProjectReference Include="..\Data_Access_Layer\Data_Access_Layer.csproj" />
+    <ProjectReference Include="..\Business_Layer\Business_Layer.csproj" />
+    <ProjectReference Include="..\Application_Layer\TodoList_Application_Layer.csproj" />
   </ItemGroup>
 
 </Project>

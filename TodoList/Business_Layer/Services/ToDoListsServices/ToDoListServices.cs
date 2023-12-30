@@ -80,7 +80,7 @@ namespace TodoList.Model.Services.ToDoListsServices
 
             var TodoList = await _repository.GetAllTodoLists(Id);
 
-            //Mapping the data with a mapper to Json serialized error doesn't occur
+            //Mapping the data without a mapper so the Json serialized error doesn't occur
 
 
             IEnumerable<TodoListDTO> userTodoLits = TodoList.Select(TodoList => new TodoListDTO()

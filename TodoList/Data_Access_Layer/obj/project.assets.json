@@ -4196,11 +4196,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\DataAccess\\Data_Access_Layer.csproj",
+      "projectUniqueName": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Data_Access_Layer\\Data_Access_Layer.csproj",
       "projectName": "Data_Access_Layer",
-      "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\DataAccess\\Data_Access_Layer.csproj",
+      "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Data_Access_Layer\\Data_Access_Layer.csproj",
       "packagesPath": "C:\\Users\\kathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\DataAccess\\obj\\",
+      "outputPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Data_Access_Layer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kathi\\AppData\\Roaming\\NuGet\\NuGet.Config",

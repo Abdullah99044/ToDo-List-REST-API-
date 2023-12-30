@@ -13,6 +13,7 @@ using TodoList.Data;
 using TodoList.Model.Services;
 using TodoList.Model.DTO.ListsDTO;
 using TodoList.Model.DTO;
+using Microsoft.AspNetCore.Cors;
 
 
 namespace TodoList.Controllers.v1
@@ -22,7 +23,7 @@ namespace TodoList.Controllers.v1
     [ApiVersion("1.0")]
     [EnableRateLimiting("FixedWindow")]
     [Authorize]
-
+ 
     public class ListController : ControllerBase
     {
 

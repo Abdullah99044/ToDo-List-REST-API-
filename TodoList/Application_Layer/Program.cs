@@ -82,16 +82,16 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("http://localhost:5173")
+        builder.WithOrigins("http://localhost:5174")
                        .AllowAnyHeader()
                        .AllowAnyMethod()
                        .AllowCredentials();
 
 
         //Later for security
-        // builder.WithOrigins(URL)
+        // builder.WithOrigins(Your website URL)
         //        .AllowAnyHeader()
-        //          .WithMethods("GET", "POST", "PATCH");
+        //        .WithMethods("GET", "POST", "PATCH");
 
     });
 });
@@ -129,7 +129,7 @@ builder.Services.AddRateLimiter(options => {
             {
 
                 PermitLimit = 10,
-                Window = TimeSpan.FromSeconds(10)
+                Window = TimeSpan.FromSeconds(1)
 
             }  
         )

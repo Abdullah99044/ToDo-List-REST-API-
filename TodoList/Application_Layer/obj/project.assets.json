@@ -5417,13 +5417,13 @@
     },
     "Business_Layer/1.0.0": {
       "type": "project",
-      "path": "../Moedl/Business_Layer.csproj",
-      "msbuildProject": "../Moedl/Business_Layer.csproj"
+      "path": "../Business_Layer/Business_Layer.csproj",
+      "msbuildProject": "../Business_Layer/Business_Layer.csproj"
     },
     "Data_Access_Layer/1.0.0": {
       "type": "project",
-      "path": "../DataAccess/Data_Access_Layer.csproj",
-      "msbuildProject": "../DataAccess/Data_Access_Layer.csproj"
+      "path": "../Data_Access_Layer/Data_Access_Layer.csproj",
+      "msbuildProject": "../Data_Access_Layer/Data_Access_Layer.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5446,11 +5446,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\TodoList\\TodoList_Application_Layer.csproj",
+      "projectUniqueName": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Application_Layer\\TodoList_Application_Layer.csproj",
       "projectName": "TodoList_Application_Layer",
-      "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\TodoList\\TodoList_Application_Layer.csproj",
+      "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Application_Layer\\TodoList_Application_Layer.csproj",
       "packagesPath": "C:\\Users\\kathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\TodoList\\obj\\",
+      "outputPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Application_Layer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5467,11 +5467,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\DataAccess\\Data_Access_Layer.csproj": {
-              "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\DataAccess\\Data_Access_Layer.csproj"
+            "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Business_Layer\\Business_Layer.csproj": {
+              "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Business_Layer\\Business_Layer.csproj"
             },
-            "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\Moedl\\Business_Layer.csproj": {
-              "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\Moedl\\Business_Layer.csproj"
+            "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Data_Access_Layer\\Data_Access_Layer.csproj": {
+              "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Data_Access_Layer\\Data_Access_Layer.csproj"
             }
           }
         }

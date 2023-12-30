@@ -11,8 +11,6 @@ namespace Model.Models
     public class Users : IdentityUser
     {
 
- 
-
         public ICollection<Lists> Lists { get; set; }
     }
 }

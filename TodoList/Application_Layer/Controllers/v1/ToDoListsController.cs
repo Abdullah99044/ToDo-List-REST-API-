@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -19,7 +20,8 @@ namespace TodoList.Controllers.v1
     [ApiVersion("1.0")]
     [Authorize]
     [EnableRateLimiting("FixedWindow")]
-  
+   
+
 
 
     public class ToDoListsController : ControllerBase

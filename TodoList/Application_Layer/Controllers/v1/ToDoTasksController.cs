@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.RateLimiting;
 using Todolist.Model.DTO.TodoTasksDTO;
 using System.Net;
 using TodoList.Model.Services.TodoTasksService;
+using Microsoft.AspNetCore.Cors;
+
 
 
  
@@ -17,6 +19,8 @@ namespace TodoList.Controllers.v1
     [ApiVersion("1.0")]
     [EnableRateLimiting("FixedWindow")]
     [Authorize]
+     
+
     public class ToDoTasksController : ControllerBase
     {
 
