@@ -18,15 +18,7 @@ namespace Model.Models
         [MaxLength(50)]
         public string Name { get; set; }
 
-
-        public int tottalTodoLists { get; set; }
-
-
-        public int finishedTodoLists { get; set; }
-
-
-        public string color { get; set; }
-
+ 
 
         [Required]
 

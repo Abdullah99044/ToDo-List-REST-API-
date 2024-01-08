@@ -12,7 +12,7 @@ namespace TodoList.Models.DTO.ToDoListsDTO
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        public string color { get; set; }
+     
 
 
     }

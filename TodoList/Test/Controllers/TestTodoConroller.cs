@@ -50,8 +50,8 @@ namespace Test.Controllers
 
             var data = new CreateToDoListDTO()
             {
-                Name = "name",
-                color = "red"
+                Name = "name" 
+               
             };
 
             var FakeList = A.Fake<Lists>();
@@ -105,8 +105,8 @@ namespace Test.Controllers
 
                     {
 
-                        Name = "name",
-                        color = "red"
+                        Name = "name" 
+                       
                         
 
                     }

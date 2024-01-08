@@ -88,9 +88,7 @@ namespace TodoList.Model.Services.ToDoListsServices
 
                 Id = TodoList.Id ,
                 Name = TodoList.Name ,
-                tottalTodoLists = TodoList.tottalTodoLists ,
-                finishedTodoLists = TodoList.finishedTodoLists ,
-                color = TodoList.color ,
+              
                 TodoTasks = TodoList.TodoTasks.Select(todoTask => new TodoTasks 
                 {
 
@@ -155,10 +153,9 @@ namespace TodoList.Model.Services.ToDoListsServices
             var ToDoListData =  new TodoList1();
 
             ToDoListData.Name = Data.Name;
-            ToDoListData.color = Data.color;
+          
             ToDoListData.ListId = Id;
-            ToDoListData.finishedTodoLists = 0;
-            ToDoListData.tottalTodoLists = 0;
+          
             ToDoListData.CreatedAt = DateTime.Now;
             ToDoListData.UpdatedAt = DateTime.Now;
 

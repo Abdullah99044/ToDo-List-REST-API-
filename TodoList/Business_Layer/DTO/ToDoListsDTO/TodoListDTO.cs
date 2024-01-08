@@ -18,13 +18,7 @@ namespace TodoList.Models.DTO.ToDoListsDTO
         [MaxLength(50)]
         public string Name { get; set; }
 
-        public int tottalTodoLists { get; set; }
-
-
-        public int finishedTodoLists { get; set; }
-
-
-        public string color { get; set; }
+       
 
         
         public ICollection<TodoTasks> TodoTasks { get; set; }

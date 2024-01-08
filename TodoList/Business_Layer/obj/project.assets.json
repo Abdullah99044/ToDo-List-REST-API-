@@ -2892,11 +2892,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Business_Layer\\Business_Layer.csproj",
+      "projectUniqueName": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\Business_Layer\\Business_Layer.csproj",
       "projectName": "Business_Layer",
-      "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Business_Layer\\Business_Layer.csproj",
+      "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\Business_Layer\\Business_Layer.csproj",
       "packagesPath": "C:\\Users\\kathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Business_Layer\\obj\\",
+      "outputPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\Business_Layer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2913,8 +2913,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Data_Access_Layer\\Data_Access_Layer.csproj": {
-              "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\Todo_List_app\\ToDo_List_app\\TodoList\\Data_Access_Layer\\Data_Access_Layer.csproj"
+            "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\Data_Access_Layer\\Data_Access_Layer.csproj": {
+              "projectPath": "C:\\Users\\kathi\\Desktop\\learning\\NewTodoApp\\ToDo_List_app\\TodoList\\Data_Access_Layer\\Data_Access_Layer.csproj"
             }
           }
         }

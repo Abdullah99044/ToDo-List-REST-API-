@@ -82,17 +82,11 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("http://localhost:5174")
+        builder.WithOrigins("your website url")
                        .AllowAnyHeader()
-                       .AllowAnyMethod()
+                       .WithMethods("GET", "POST", "DELETE", "PUT")
                        .AllowCredentials();
-
-
-        //Later for security
-        // builder.WithOrigins(Your website URL)
-        //        .AllowAnyHeader()
-        //        .WithMethods("GET", "POST", "PATCH");
-
+                       
     });
 });
 

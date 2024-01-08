@@ -123,7 +123,7 @@ namespace TodoList.Controllers.v1
             // Encode the input to prevent XSS
 
             Data.Name = WebUtility.HtmlEncode(Data.Name);
-            Data.color = WebUtility.HtmlEncode(Data.color);
+       
 
 
             //Insert the todo list
@@ -175,14 +175,12 @@ namespace TodoList.Controllers.v1
             // Encode the input to prevent XSS
 
             Data.Name = WebUtility.HtmlEncode(Data.Name);
-            Data.color = WebUtility.HtmlEncode(Data.color);
+      
 
             //Update the todo list data
 
             GetTodoList.Name = Data.Name;
-            GetTodoList.color = Data.color;
-            GetTodoList.tottalTodoLists = Data.tottalTodoLists;
-            GetTodoList.finishedTodoLists = Data.finishedTodoLists;
+         
             
             
 

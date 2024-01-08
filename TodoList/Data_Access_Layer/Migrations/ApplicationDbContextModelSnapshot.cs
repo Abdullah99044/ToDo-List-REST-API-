@@ -212,16 +212,6 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("finishedTodoLists")
-                        .HasColumnType("int");
-
-                    b.Property<int>("tottalTodoLists")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ListId");
